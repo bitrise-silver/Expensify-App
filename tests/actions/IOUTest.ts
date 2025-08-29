@@ -1676,7 +1676,7 @@ describe('actions/IOU', () => {
                     name: 'Start Location',
                     address: '123 Main St',
                     lat: 40.7128,
-                    lng: -74.0060,
+                    lng: -74.006,
                     city: 'New York',
                     state: 'NY',
                     zipCode: '10001',
@@ -1729,7 +1729,7 @@ describe('actions/IOU', () => {
                 name: 'Start Location',
                 address: '123 Main St',
                 lat: 40.7128,
-                lng: -74.0060,
+                lng: -74.006,
             });
 
             // Verify waypoint1 only has allowed fields (no name field since it wasn't provided)
