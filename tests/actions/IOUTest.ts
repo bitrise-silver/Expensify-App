@@ -1700,8 +1700,7 @@ describe('actions/IOU', () => {
             };
 
             // Mock API.write to capture the parameters
-            const mockAPIWrite = jest.fn();
-            API.write = mockAPIWrite;
+            const mockAPIWrite = jest.spyOn(API, 'write').mockImplementation(jest.fn());
 
             // When: Creating a distance request with waypoints containing extra fields
             createDistanceRequest({
@@ -1720,9 +1719,9 @@ describe('actions/IOU', () => {
 
             // Then: The API should be called with sanitized waypoints containing only allowed fields
             expect(mockAPIWrite).toHaveBeenCalled();
-            const apiCall = mockAPIWrite.mock.calls[0];
-            const parameters = apiCall[1];
-            const sanitizedWaypoints = JSON.parse(parameters.waypoints);
+            const apiCall = mockAPIWrite.mock.calls.at(0);
+            const parameters = apiCall?.at(1) as Record<string, unknown>;
+            const sanitizedWaypoints = JSON.parse(parameters?.waypoints as string);
 
             // Verify waypoint0 only has allowed fields
             expect(sanitizedWaypoints.waypoint0).toEqual({
@@ -4956,6 +4955,7 @@ describe('actions/IOU', () => {
     describe('sendInvoice', () => {
         it('creates a new invoice chat when one has been converted from individual to business', async () => {
             // Mock API.write for this test
+            // eslint-disable-next-line rulesdir/no-multiple-api-calls
             const writeSpy = jest.spyOn(API, 'write').mockImplementation(jest.fn());
 
             // Given a convertedInvoiceReport is stored in Onyx
