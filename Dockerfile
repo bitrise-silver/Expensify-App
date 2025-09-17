@@ -46,7 +46,8 @@ ENV PATH=$JAVA_HOME/bin:$PATH
 
 ARG ANDROID_SDK_VERSION=13114758
 ARG ANDROID_BUILD_TOOLS_VERSION=35.0.0
-ARG ANDROID_NDK_VERSION=27.1.12297006
+ARG ANDROID_NDK_VERSION=27.0.12077973
+ARG ANDROID_NDK_VERSION_2=27.1.12297006
 ARG ANDROID_PLATFORM_VERSION=35
 ARG CMAKE_VERSION=3.22.1
 
@@ -75,6 +76,7 @@ RUN $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-${ANDRO
 RUN $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "system-images;android-${ANDROID_PLATFORM_VERSION};google_apis_playstore;x86_64"
 RUN $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
 RUN $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;${ANDROID_NDK_VERSION}"
+RUN $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;${ANDROID_NDK_VERSION_2}"
 RUN $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "cmake;${CMAKE_VERSION}"
 
 RUN mkdir /app
@@ -91,8 +93,8 @@ ENV PATH="/usr/local/bundle/bin:$PATH"
 ARG BUNDLER_VERSION="2.4.19"
 RUN gem install bundler:$BUNDLER_VERSION
 
-COPY Gemfile .
-COPY Gemfile.lock .
-RUN bundle update ffi
-RUN bundle config set path $BUNDLE_PATH
-RUN bundle install --binstubs --system --no-cache
+# COPY Gemfile .
+# COPY Gemfile.lock .
+# RUN bundle update ffi
+# RUN bundle config set path $BUNDLE_PATH
+# RUN bundle install --binstubs --system --no-cache
